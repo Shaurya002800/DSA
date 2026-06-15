@@ -1,4 +1,3 @@
-import java.util.*;
 class Solution {
     public class TreeNode {
     int val;
@@ -145,24 +144,59 @@ class Solution {
         // Input: root = [3,9,20,null,null,15,7]
         // Output: true
 
-        public boolean isBalanced(TreeNode root) {
-            return height(root) != -1;
+        // public boolean isBalanced(TreeNode root) {
+        //     return height(root) != -1;
+        // }
+        // public int height(TreeNode root) {
+        //     if(root == null) {
+        //         return 0;
+        //     }
+        //     int left = height(root.left);
+        //     if(left == -1) {
+        //         return -1;
+        //     }
+        //     int right = height(root.right);
+        //     if(right == -1) {
+        //         return -1;
+        //     }
+        //     if(Math.abs(left - right) > 1) {
+        //         return -1;
+        //     }
+        //     return 1 + Math.max(left, right);
+        // }
+
+
+
+
+
+
+
+        //DIAMETER OF BINARY TREE
+        // Given the root of a binary tree, return the length of the diameter of the tree
+        // The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the
+        // root.
+
+        // Example 1:
+        // Input: root = [1,2,3,4,5]
+        // Output: 3
+        // Explanation: 3 is the length of the path [4,2,1,3] or [5,2,1,3].
+
+        // Example 2:
+        // Input: root = [1,2]
+        // Output: 1
+
+        int diameter = 0;
+        public int diameterOfBinaryTree(TreeNode root) {
+            height(root);
+            return diameter;
         }
         public int height(TreeNode root) {
             if(root == null) {
                 return 0;
             }
             int left = height(root.left);
-            if(left == -1) {
-                return -1;
-            }
             int right = height(root.right);
-            if(right == -1) {
-                return -1;
-            }
-            if(Math.abs(left - right) > 1) {
-                return -1;
-            }
+            diameter = Math.max(diameter, left + right);
             return 1 + Math.max(left, right);
         }
 }

@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Solution {
     public class TreeNode {
     int val;
@@ -232,19 +234,67 @@ class Solution {
         // Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.
 
 
-        int see = Integer.MIN_VALUE;
-        public int maxPathSum(TreeNode root) {
-            solve(root);
-            return see;
+        // int see = Integer.MIN_VALUE;
+        // public int maxPathSum(TreeNode root) {
+        //     solve(root);
+        //     return see;
+        // }
+        // public int solve(TreeNode root) {
+        //     if(root == null) {
+        //         return 0;
+        //     }
+        //     int left = Math.max(0, solve(root.left));
+        //     int right = Math.max(0, solve(root.right));
+        //     int temp = left + right + root.val;
+        //     see = Math.max(see, temp);
+        //     return root.val + Math.max(left, right);
+        // }
+
+
+
+
+
+
+
+
+
+        // BINARY TREE ZIGZAG LEVEL ORDER TRAVERSAL
+        // Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
+
+        // Example 1:
+        // Input: root = [3,9,20,null,null,15,7]
+        // Output: [[3],[20,9],[15,7]]
+
+        // Example 2:
+        // Input: root = [1]
+        // Output: [[1]]
+        public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if(root == null) {
+            return ans;
         }
-        public int solve(TreeNode root) {
-            if(root == null) {
-                return 0;
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        boolean leftToRight = true;
+        while(!q.isEmpty()) {
+            int size = q.size();
+            List<Integer> level = new ArrayList<>();
+            for(int i = 0; i < size; i++) {
+                TreeNode node = q.poll();
+                level.add(node.val);
+                if(node.left != null) {
+                    q.offer(node.left);
+                }
+                if(node.right != null) {
+                    q.offer(node.right);
+                }
             }
-            int left = Math.max(0, solve(root.left));
-            int right = Math.max(0, solve(root.right));
-            int temp = left + right + root.val;
-            see = Math.max(see, temp);
-            return root.val + Math.max(left, right);
+            if(!leftToRight) {
+                Collections.reverse(level);
+            }
+            ans.add(level);
+            leftToRight = !leftToRight;
         }
+        return ans;
+    }
 }

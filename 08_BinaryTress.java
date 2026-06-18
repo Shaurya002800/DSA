@@ -5,8 +5,9 @@ class Solution {
     int val;
     TreeNode left;
     TreeNode right;
+    public Integer data;
     TreeNode() {}
-   TreeNode(int val) { this.val = val; }
+    TreeNode(int val) { this.val = val; }
     TreeNode(int val, TreeNode left, TreeNode right) {
         this.val = val;
         this.left = left;
@@ -268,33 +269,108 @@ class Solution {
         // Example 2:
         // Input: root = [1]
         // Output: [[1]]
-        public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> ans = new ArrayList<>();
-        if(root == null) {
+    //     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+    //     List<List<Integer>> ans = new ArrayList<>();
+    //     if(root == null) {
+    //         return ans;
+    //     }
+    //     Queue<TreeNode> q = new LinkedList<>();
+    //     q.offer(root);
+    //     boolean leftToRight = true;
+    //     while(!q.isEmpty()) {
+    //         int size = q.size();
+    //         List<Integer> level = new ArrayList<>();
+    //         for(int i = 0; i < size; i++) {
+    //             TreeNode node = q.poll();
+    //             level.add(node.val);
+    //             if(node.left != null) {
+    //                 q.offer(node.left);
+    //             }
+    //             if(node.right != null) {
+    //                 q.offer(node.right);
+    //             }
+    //         }
+    //         if(!leftToRight) {
+    //             Collections.reverse(level);
+    //         }
+    //         ans.add(level);
+    //         leftToRight = !leftToRight;
+    //     }
+    //     return ans;
+    // }
+
+
+
+
+
+
+    //Boundary Traversal in Binary Tree        
+        boolean isLeaf(TreeNode root) {
+            return root.left == null && root.right == null;
+        }
+
+        void addLeftBoundary(TreeNode root, ArrayList<Integer> ans) {
+            TreeNode curr = root.left;
+
+            while(curr != null) {
+                if(!isLeaf(curr)) {
+                    ans.add(curr.data);
+                }
+
+                if(curr.left != null) {
+                    curr = curr.left;
+                } else {
+                    curr = curr.right;
+                }
+            }
+        }
+
+        void addLeaves(TreeNode root, ArrayList<Integer> ans) {
+            if(root == null) return;
+
+            if(isLeaf(root)) {
+                ans.add(root.data);
+                return;
+            }
+
+            addLeaves(root.left, ans);
+            addLeaves(root.right, ans);
+        }
+
+        void addRightBoundary(TreeNode root, ArrayList<Integer> ans) {
+            TreeNode curr = root.right;
+            ArrayList<Integer> temp = new ArrayList<>();
+
+            while(curr != null) {
+                if(!isLeaf(curr)) {
+                    temp.add(curr.data);
+                }
+
+                if(curr.right != null) {
+                    curr = curr.right;
+                } else {
+                    curr = curr.left;
+                }
+            }
+
+            for(int i = temp.size() - 1; i >= 0; i--) {
+                ans.add(temp.get(i));
+            }
+        }
+
+        ArrayList<Integer> boundaryTraversal(TreeNode root) {
+            ArrayList<Integer> ans = new ArrayList<>();
+
+            if(root == null) return ans;
+
+            if(!isLeaf(root)) {
+                ans.add(root.data);
+            }
+
+            addLeftBoundary(root, ans);
+            addLeaves(root, ans);
+            addRightBoundary(root, ans);
+
             return ans;
         }
-        Queue<TreeNode> q = new LinkedList<>();
-        q.offer(root);
-        boolean leftToRight = true;
-        while(!q.isEmpty()) {
-            int size = q.size();
-            List<Integer> level = new ArrayList<>();
-            for(int i = 0; i < size; i++) {
-                TreeNode node = q.poll();
-                level.add(node.val);
-                if(node.left != null) {
-                    q.offer(node.left);
-                }
-                if(node.right != null) {
-                    q.offer(node.right);
-                }
-            }
-            if(!leftToRight) {
-                Collections.reverse(level);
-            }
-            ans.add(level);
-            leftToRight = !leftToRight;
-        }
-        return ans;
-    }
 }

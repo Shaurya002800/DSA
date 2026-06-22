@@ -305,72 +305,125 @@ class Solution {
 
 
     //Boundary Traversal in Binary Tree        
-        boolean isLeaf(TreeNode root) {
-            return root.left == null && root.right == null;
-        }
+        // boolean isLeaf(TreeNode root) {
+        //     return root.left == null && root.right == null;
+        // }
 
-        void addLeftBoundary(TreeNode root, ArrayList<Integer> ans) {
-            TreeNode curr = root.left;
+        // void addLeftBoundary(TreeNode root, ArrayList<Integer> ans) {
+        //     TreeNode curr = root.left;
 
-            while(curr != null) {
-                if(!isLeaf(curr)) {
-                    ans.add(curr.data);
+        //     while(curr != null) {
+        //         if(!isLeaf(curr)) {
+        //             ans.add(curr.data);
+        //         }
+
+        //         if(curr.left != null) {
+        //             curr = curr.left;
+        //         } else {
+        //             curr = curr.right;
+        //         }
+        //     }
+        // }
+
+        // void addLeaves(TreeNode root, ArrayList<Integer> ans) {
+        //     if(root == null) return;
+
+        //     if(isLeaf(root)) {
+        //         ans.add(root.data);
+        //         return;
+        //     }
+
+        //     addLeaves(root.left, ans);
+        //     addLeaves(root.right, ans);
+        // }
+
+        // void addRightBoundary(TreeNode root, ArrayList<Integer> ans) {
+        //     TreeNode curr = root.right;
+        //     ArrayList<Integer> temp = new ArrayList<>();
+
+        //     while(curr != null) {
+        //         if(!isLeaf(curr)) {
+        //             temp.add(curr.data);
+        //         }
+
+        //         if(curr.right != null) {
+        //             curr = curr.right;
+        //         } else {
+        //             curr = curr.left;
+        //         }
+        //     }
+
+        //     for(int i = temp.size() - 1; i >= 0; i--) {
+        //         ans.add(temp.get(i));
+        //     }
+        // }
+
+        // ArrayList<Integer> boundaryTraversal(TreeNode root) {
+        //     ArrayList<Integer> ans = new ArrayList<>();
+
+        //     if(root == null) return ans;
+
+        //     if(!isLeaf(root)) {
+        //         ans.add(root.data);
+        //     }
+
+        //     addLeftBoundary(root, ans);
+        //     addLeaves(root, ans);
+        //     addRightBoundary(root, ans);
+
+        //     return ans;
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //BINARY TREE RIGHT SIDE VIEW
+
+        // Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+        // Example 1:
+        // Input: root = [1,2,3,null,5,null,4]
+        // Output: [1,3,4]
+
+        // Example 2:
+        // Input: root = [1,2,3,4,null,null,null,5]
+        // Output: [1,3,4,5]
+
+
+        public List<Integer> rightSideView(TreeNode root) {
+            List<Integer> ans = new ArrayList<>();
+            if(root == null) {
+                return ans;
+            }
+            Queue<TreeNode> q = new LinkedList<>();
+            q.offer(root);
+            while(!q.isEmpty()) {
+                int size = q.size();
+                List<Integer> level = new ArrayList<>();
+                for(int i = 0; i < size; i++) {
+                    TreeNode node = q.poll();
+                    level.add(node.val);
+                    if(node.left != null) {
+                        q.offer(node.left);
+                    }
+                    if(node.right != null) {
+                        q.offer(node.right);
+                    }
                 }
-
-                if(curr.left != null) {
-                    curr = curr.left;
-                } else {
-                    curr = curr.right;
-                }
+                ans.add(level.get(level.size() - 1));
             }
-        }
-
-        void addLeaves(TreeNode root, ArrayList<Integer> ans) {
-            if(root == null) return;
-
-            if(isLeaf(root)) {
-                ans.add(root.data);
-                return;
-            }
-
-            addLeaves(root.left, ans);
-            addLeaves(root.right, ans);
-        }
-
-        void addRightBoundary(TreeNode root, ArrayList<Integer> ans) {
-            TreeNode curr = root.right;
-            ArrayList<Integer> temp = new ArrayList<>();
-
-            while(curr != null) {
-                if(!isLeaf(curr)) {
-                    temp.add(curr.data);
-                }
-
-                if(curr.right != null) {
-                    curr = curr.right;
-                } else {
-                    curr = curr.left;
-                }
-            }
-
-            for(int i = temp.size() - 1; i >= 0; i--) {
-                ans.add(temp.get(i));
-            }
-        }
-
-        ArrayList<Integer> boundaryTraversal(TreeNode root) {
-            ArrayList<Integer> ans = new ArrayList<>();
-
-            if(root == null) return ans;
-
-            if(!isLeaf(root)) {
-                ans.add(root.data);
-            }
-
-            addLeftBoundary(root, ans);
-            addLeaves(root, ans);
-            addRightBoundary(root, ans);
-
             return ans;
         }
 }

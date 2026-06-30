@@ -16,42 +16,119 @@ import java.util.*;
 // Depending on your language, the queue may not be supported natively. You may simulate a queue using a list or deque (double-ended queue) as long as you use only a queue's standard operations.
 
 
-class MyStack {
-    Queue<Integer> q1=new LinkedList<>();
+// class MyStack {
+//     Queue<Integer> q1=new LinkedList<>();
     
-    public MyStack() {
+//     public MyStack() {
         
+//     }
+    
+//     public void push(int x) {
+//         q1.add(x);
+//     }
+    
+//     public int pop() {
+//         int n=q1.size();
+//         for(int i=1;i<=n-1;i++){
+//             q1.add(q1.remove());
+//         }
+//         return q1.remove();
+
+//     }
+    
+//     public int top() {
+//         int n=q1.size();
+//         for(int i=1;i<=n-1;i++){
+//             q1.add(q1.remove());
+//         }
+//         int p=q1.peek();
+
+//         q1.add(q1.remove());
+//         return p;
+
+//     }
+    
+//     public boolean empty() {
+//         if(q1.size()==0){
+//             return true;
+//         }
+//         else return false;
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Implement Queue using Stacks
+
+// Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (push, peek, pop, and empty).
+
+// Implement the MyQueue class:
+
+// void push(int x) Pushes element x to the back of the queue.
+// int pop() Removes the element from the front of the queue and returns it.
+// int peek() Returns the element at the front of the queue.
+// boolean empty() Returns true if the queue is empty, false otherwise.
+// Notes:
+
+// You must use only standard operations of a stack, which means only push to top, peek/pop from top, size, and is empty operations are valid.
+// Depending on your language, the stack may not be supported natively. You may simulate a stack using a list or deque (double-ended queue) as long as you use only a stack's standard operations.
+
+
+
+
+class MyQueue {
+
+    Stack<Integer> input;
+    Stack<Integer> output;
+
+    public MyQueue() {
+        input = new Stack<>();
+        output = new Stack<>();
     }
     
     public void push(int x) {
-        q1.add(x);
+        input.push(x);
     }
     
     public int pop() {
-        int n=q1.size();
-        for(int i=1;i<=n-1;i++){
-            q1.add(q1.remove());
+        if(output.empty()) {
+            while(!input.empty()) {
+                output.push(input.pop());
+            }
         }
-        return q1.remove();
 
+        return output.pop();
     }
     
-    public int top() {
-        int n=q1.size();
-        for(int i=1;i<=n-1;i++){
-            q1.add(q1.remove());
+    public int peek() {
+        if(output.empty()) {
+            while(!input.empty()) {
+                output.push(input.pop());
+            }
         }
-        int p=q1.peek();
 
-        q1.add(q1.remove());
-        return p;
-
+        return output.peek();
     }
     
     public boolean empty() {
-        if(q1.size()==0){
-            return true;
-        }
-        else return false;
+        return input.empty() && output.empty();
     }
 }

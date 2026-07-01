@@ -94,41 +94,100 @@ import java.util.*;
 
 
 
-class MyQueue {
+// class MyQueue {
 
-    Stack<Integer> input;
-    Stack<Integer> output;
+//     Stack<Integer> input;
+//     Stack<Integer> output;
 
-    public MyQueue() {
-        input = new Stack<>();
-        output = new Stack<>();
-    }
+//     public MyQueue() {
+//         input = new Stack<>();
+//         output = new Stack<>();
+//     }
     
-    public void push(int x) {
-        input.push(x);
-    }
+//     public void push(int x) {
+//         input.push(x);
+//     }
     
-    public int pop() {
-        if(output.empty()) {
-            while(!input.empty()) {
-                output.push(input.pop());
+//     public int pop() {
+//         if(output.empty()) {
+//             while(!input.empty()) {
+//                 output.push(input.pop());
+//             }
+//         }
+
+//         return output.pop();
+//     }
+    
+//     public int peek() {
+//         if(output.empty()) {
+//             while(!input.empty()) {
+//                 output.push(input.pop());
+//             }
+//         }
+
+//         return output.peek();
+//     }
+    
+//     public boolean empty() {
+//         return input.empty() && output.empty();
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+//Valid Parentheses
+
+// Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+// An input string is valid if:
+
+// Open brackets must be closed by the same type of brackets.
+// Open brackets must be closed in the correct order.
+// Every close bracket has a corresponding open bracket of the same type.
+ 
+
+// Example 1:
+// Input: s = "()"
+// Output: true
+
+// Example 2:
+// Input: s = "()[]{}"
+// Output: true
+
+
+
+
+import java.util.Stack;
+
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (int j = 0; j < s.length(); j++) {
+            char current = s.charAt(j);
+            if (current == '(' || current == '{' || current == '[') {
+                stack.push(current);
+            } 
+            else {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                char top = stack.pop();
+                if ((current == ')' && top != '(') ||
+                    (current == '}' && top != '{') ||
+                    (current == ']' && top != '[')) {
+                    return false;
+                }
             }
-        }
-
-        return output.pop();
-    }
-    
-    public int peek() {
-        if(output.empty()) {
-            while(!input.empty()) {
-                output.push(input.pop());
-            }
-        }
-
-        return output.peek();
-    }
-    
-    public boolean empty() {
-        return input.empty() && output.empty();
+        }        
+        return stack.isEmpty();
     }
 }

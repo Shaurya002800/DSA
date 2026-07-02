@@ -166,28 +166,98 @@ import java.util.*;
 
 
 
-import java.util.Stack;
 
-class Solution {
-    public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
-        for (int j = 0; j < s.length(); j++) {
-            char current = s.charAt(j);
-            if (current == '(' || current == '{' || current == '[') {
-                stack.push(current);
-            } 
-            else {
-                if (stack.isEmpty()) {
-                    return false;
-                }
-                char top = stack.pop();
-                if ((current == ')' && top != '(') ||
-                    (current == '}' && top != '{') ||
-                    (current == ']' && top != '[')) {
-                    return false;
-                }
-            }
-        }        
-        return stack.isEmpty();
+// class Solution {
+//     public boolean isValid(String s) {
+//         Stack<Character> stack = new Stack<>();
+//         for (int j = 0; j < s.length(); j++) {
+//             char current = s.charAt(j);
+//             if (current == '(' || current == '{' || current == '[') {
+//                 stack.push(current);
+//             } 
+//             else {
+//                 if (stack.isEmpty()) {
+//                     return false;
+//                 }
+//                 char top = stack.pop();
+//                 if ((current == ')' && top != '(') ||
+//                     (current == '}' && top != '{') ||
+//                     (current == ']' && top != '[')) {
+//                     return false;
+//                 }
+//             }
+//         }        
+//         return stack.isEmpty();
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//MIN Stack
+
+// Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+// Implement the MinStack class:
+
+// MinStack() initializes the stack object.
+// void push(int value) pushes the element value onto the stack.
+// void pop() removes the element on the top of the stack.
+// int top() gets the top element of the stack.
+// int getMin() retrieves the minimum element in the stack.
+// You must implement a solution with O(1) time complexity for each function.
+
+
+class MinStack {
+    Stack<Integer> stack;
+    Stack<Integer> minStack;
+
+    public MinStack() {
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+    
+    public void push(int value) {
+        stack.push(value);
+
+        if(minStack.empty() || value <= minStack.peek()) {
+            minStack.push(value);
+        }
+    }
+    
+    public void pop() {
+        int removed = stack.pop();
+
+        if(removed == minStack.peek()) {
+            minStack.pop();
+        }
+    }
+    
+    public int top() {
+        return stack.peek();
+    }
+    
+    public int getMin() {
+        return minStack.peek();
     }
 }

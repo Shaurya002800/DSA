@@ -309,30 +309,85 @@ import java.util.*;
 
 
 
+// class Solution {
+//     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+//         HashMap<Integer, Integer> map = new HashMap<>();
+//         Stack<Integer> stack = new Stack<>();
+//         for(int i = nums2.length - 1; i >= 0; i--) {
+//             int curr = nums2[i];
+//             while(!stack.empty() && stack.peek() <= curr) {
+//                 stack.pop();
+//             }
+//             if(stack.empty()) {
+//                 map.put(curr, -1);
+//             } 
+//             else {
+//                 map.put(curr, stack.peek());
+//             }
+//             stack.push(curr);
+//         }
+//         int[] ans = new int[nums1.length];
+//         for(int i = 0; i < nums1.length; i++) {
+//             ans[i] = map.get(nums1[i]);
+//         }
+//         return ans;
+//     }
+// }
 
-import java.util.*;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Sum of Subarray Minimums
+
+// Given an array of integers arr, find the sum of min(b), where b ranges over every (contiguous) subarray of arr. Since the answer may be large, return the answer modulo 109 + 7.
+ 
+
+// Example 1:
+
+// Input: arr = [3,1,2,4]
+// Output: 17
+// Explanation: 
+// Subarrays are [3], [1], [2], [4], [3,1], [1,2], [2,4], [3,1,2], [1,2,4], [3,1,2,4]. 
+// Minimums are 3, 1, 2, 4, 1, 1, 2, 1, 1, 1.
+// Sum is 17.
+
+
 
 class Solution {
-    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-        HashMap<Integer, Integer> map = new HashMap<>();
+    public int sumSubarrayMins(int[] arr) {
+        int MOD = 1000000007;
+        int n = arr.length;
         Stack<Integer> stack = new Stack<>();
-        for(int i = nums2.length - 1; i >= 0; i--) {
-            int curr = nums2[i];
-            while(!stack.empty() && stack.peek() <= curr) {
-                stack.pop();
+        long ans = 0;
+        for(int i = 0; i <= n; i++) {
+            while(!stack.empty() && (i == n || arr[stack.peek()] >= arr[i])) {
+                int mid = stack.pop();
+                int left;
+                if(stack.empty()) {
+                    left = -1;
+                } else {
+                    left = stack.peek();
+                }
+                int right = i;
+                long count = (long)(mid - left) * (right - mid);
+                ans = (ans + arr[mid] * count) % MOD;
             }
-            if(stack.empty()) {
-                map.put(curr, -1);
-            } 
-            else {
-                map.put(curr, stack.peek());
-            }
-            stack.push(curr);
+            stack.push(i);
         }
-        int[] ans = new int[nums1.length];
-        for(int i = 0; i < nums1.length; i++) {
-            ans[i] = map.get(nums1[i]);
-        }
-        return ans;
+        return (int) ans;
     }
 }

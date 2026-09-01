@@ -353,23 +353,81 @@ import java.util.*;
 // Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
 
 
+// class Solution {
+//     public int minPathSum(int[][] grid) {
+//         int m = grid.length;
+//         int n = grid[0].length;
+//         // int[][] dp = new int[m][n];
+//         for(int i = 0; i < m; i++){
+//             for(int j = 0; j < n; j++){
+//                 if(i == 0 && j == 0) continue;
+//                 else {
+//                     int right = Integer.MAX_VALUE;
+//                     int down = Integer.MAX_VALUE;
+//                     int curr = grid[i][j];
+//                     if(i > 0) down = grid[i - 1][j] + curr;
+//                     if(j > 0) right = grid[i][j - 1] + curr;
+//                     grid[i][j] = Math.min(down, right); 
+//                 }
+//             }
+//         }
+//         return grid[m - 1][n - 1];
+//     }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Triangle
+
+// Given a triangle array, return the minimum path sum from top to bottom.
+// For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current row, you may move to either index i or index i + 1 on the next row.
+
+// Example 1:
+// Input: triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]
+// Output: 11
+// Explanation: The triangle looks like:
+//    2
+//   3 4
+//  6 5 7
+// 4 1 8 3
+// The minimum path sum from top to bottom is 2 + 3 + 5 + 1 = 11 (underlined above).
+
+
+
 class Solution {
-    public int minPathSum(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        // int[][] dp = new int[m][n];
-        for(int i = 0; i < m; i++){
-            for(int j = 0; j < n; j++){
-                if(i == 0 && j == 0) continue;
-                else {
-                    int right = Integer.MAX_VALUE;
-                    int down = Integer.MAX_VALUE;
-                    int curr = grid[i][j];
-                    if(i > 0) down = grid[i - 1][j] + curr;
-                    if(j > 0) right = grid[i][j - 1] + curr;
-                    grid[i][j] = Math.min(down, right); 
-                }
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n = triangle.size();
+        int[][] dp = new int[n][n];
+        for (int j = 0; j < n; j++) {
+            dp[n - 1][j] = triangle.get(n - 1).get(j);
+        }
+        for (int i = n - 2; i >= 0; i--) {
+            for (int j = i; j >= 0; j--) {
+                int down = triangle.get(i).get(j) + dp[i + 1][j];
+                int diagonal = triangle.get(i).get(j) + dp[i + 1][j + 1];
+                dp[i][j] = Math.min(down, diagonal);
             }
         }
-        return grid[m - 1][n - 1];
+        return dp[0][0];
     }
+}
